@@ -15,8 +15,8 @@ export default function Home() {
         style={styles.map}
         initialRegion={{
           ...cloudCampus,
-          latitudeDelta: 0.01,  // plus petit = plus zoomé
-          longitudeDelta: 0.01,
+          latitudeDelta: 0.03,  // plus petit = plus zoomé
+          longitudeDelta: 0.03,
         }}
       >
         <Marker
