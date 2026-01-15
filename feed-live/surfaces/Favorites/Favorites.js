@@ -15,9 +15,20 @@ import { feedPosts } from '../Feed/feedData';
 
 export default function Favorites() {
   const dispatch = useDispatch();
+
+
   const likedPosts = useSelector(state => state.likedImages.likedPosts);
 
-  const likedPostsData = feedPosts.filter(post => likedPosts.includes(post.id));
+  
+  const userPosts = useSelector(state => state.feed.posts);
+
+
+  const allPosts = [...userPosts, ...feedPosts];
+
+
+  const likedPostsData = allPosts.filter(post =>
+    likedPosts.includes(post.id)
+  );
 
   const handleUnlike = (postId) => {
     dispatch(toggleLike(postId));
@@ -26,13 +37,13 @@ export default function Favorites() {
   const renderPost = ({ item }) => (
     <View style={styles.postContainer}>
       <Image source={{ uri: item.image }} style={styles.postImage} />
-      
+
       <View style={styles.postOverlay}>
         <View style={styles.postHeader}>
           <Image source={{ uri: item.userAvatar }} style={styles.userAvatar} />
           <Text style={styles.userName}>{item.userName}</Text>
         </View>
-        
+
         <TouchableOpacity
           style={styles.likeButton}
           onPress={() => handleUnlike(item.id)}

@@ -11,14 +11,21 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'expo-router';
+import { addPost } from '../../store/feedReducer';
+
 
 export default function AddPost() {
+    const dispatch = useDispatch();
+    const router = useRouter();
+
   const [caption, setCaption] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
 
-  // 📸 Ouvrir la galerie iPhone
+
   const handleSelectImage = async () => {
-    // Permission galerie
+    
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -30,7 +37,7 @@ export default function AddPost() {
       return;
     }
 
-    // Ouvrir la galerie
+    
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -44,15 +51,29 @@ export default function AddPost() {
   };
 
   const handlePost = () => {
-    if (!selectedImage) {
-      Alert.alert('Erreur', 'Veuillez sélectionner une image');
-      return;
-    }
+  if (!selectedImage) {
+    Alert.alert('Erreur', 'Veuillez sélectionner une image');
+    return;
+  }
 
-    Alert.alert('Succès', 'Votre post a été publié !');
-    setCaption('');
-    setSelectedImage(null);
+  const newPost = {
+    id: Date.now(),
+    userName: 'Omar',
+    userAvatar: 'https://images.unsplash.com/photo-1671016233693-53162078ca1c?q=80&w=1129&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: selectedImage,
+    caption,
+    likes: 0,
+    time: 'À l’instant',
   };
+
+  dispatch(addPost(newPost));
+
+  setCaption('');
+  setSelectedImage(null);
+
+  router.push('/'); 
+};
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -124,7 +145,7 @@ export default function AddPost() {
   );
 }
 
-/* ===================== STYLES ===================== */
+
 
 const styles = StyleSheet.create({
   container: {
