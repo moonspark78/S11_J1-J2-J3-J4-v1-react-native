@@ -8,3 +8,4 @@ import App from './App';
 registerRootComponent(App);
 
 // registerRootComponent(App);
+//# sourceMappingURL=index.js.map
