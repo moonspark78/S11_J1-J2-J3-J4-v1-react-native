@@ -20,7 +20,7 @@ export default function ResultScreen({ route, navigation }: any) {
       </Text>
 
       <Text>Starting : {starting}</Text>
-      <Text>Target : {target}</Text>
+      <Text>Target /: {target}</Text>
 
       <Image
         source={
